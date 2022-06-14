@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int *createArray(unsigned int length, int value)
+{
+    int *array = (int *)malloc(length * sizeof(int));
+
+    if (array == NULL)
+        return NULL;
+
+    for (unsigned int i = 0; i < length; i++)
+    {
+        array[i] = value;
+    }
+
+    return array;
+}
+
+int *freeArray(int *array)
+{
+    if (array == NULL)
+        return NULL;
+
+    free(array);
+    return NULL;
+}
+
+int main()
+{
+    unsigned int length = 3;
+
+    int *array = createArray(length, 1);
+
+    if (array == NULL)
+        return 0;
+
+    for (unsigned int i = 0; i < length; i++)
+    {
+        printf("%d\n", array[i]);
+    }
+
+    array = freeArray(array);
+
+    printf("%p\n", array);
+
+    return 0;
+}
