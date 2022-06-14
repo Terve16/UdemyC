@@ -73,40 +73,44 @@ void printArray(int *array, unsigned int length)
     }
 }
 
-void printMatrix(int **matrix, unsigned int no_rows, unsigned int no_columns)
+unsigned int index_lookup(unsigned int i, unsigned int j, unsigned int num_columns)
+{
+    return (i * num_columns + j);
+}
+
+void printMatrix(int *matrix, unsigned int no_rows, unsigned int no_columns)
 {
     if (matrix == NULL)
         return;
 
     for (unsigned int i = 0; i < no_rows; i++)
     {
-        if (matrix[i] == NULL)
-            continue;
-
-        printArray(matrix[i], no_columns);
+        for (unsigned int j = 0; j < no_columns; j++)
+        {
+            printf("%d, ", matrix[index_lookup(i, j, no_columns)]);
+        }
+        printf("\n");
     }
+    printf("\n");
 }
+
+
+
 
 int main()
 {
-    unsigned int length = 3;
+    unsigned int num_rows = 2;
+    unsigned int num_columns = 3;
+    unsigned int num_elements = 6;
 
-    int *array = createArray(length, 1);
+    int *array = createArray(num_elements, 1);
 
     if (array == NULL)
         return 0;
 
-    printArray(array, length);
+    printMatrix(array, num_rows, num_columns);
 
     array = freeArray(array);
-
-    //printf("%p\n", array);
-
-    int **matrix = createMatrix(2, 3, 1337);
-
-    printMatrix(matrix, 2, 3);
-
-    matrix = freeMatrix(2, matrix);
 
     return 0;
 }

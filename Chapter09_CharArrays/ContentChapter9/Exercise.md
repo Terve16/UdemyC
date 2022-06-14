@@ -6,7 +6,7 @@ Willkommen bei der nächsten Programmier-Übung in diesem Kurs.
 
 ## Aufgaben der Programmierübung
 
-- Implementiere die "join" Funktion 
+- Implementiere die "join" Funktion  
   - Die Join Funktion nimmt ein **delimiter** (**char\***) und eine liste an strings **list** (**char\*\***) entgegen
   - In der Funktion werden alle Strings aus der **list** konkateniert, aber im Gegensatz zu der normalen Konkatenierung wird zischen den Teilwörtern der **delimiter** reingepackt
 
