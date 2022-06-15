@@ -15,9 +15,9 @@ typedef struct
 
 typedef struct
 {
-    char b;
-    int a;
     float c;
+    int a;
+    char b;
 } s_data2; // 9 (12)
 
 typedef struct

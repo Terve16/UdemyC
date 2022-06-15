@@ -1,0 +1,7 @@
+cd build/Debug/
+
+# channel 2 == error log
+outDebug.exe 2> ErrorLog.txt
+
+# channel 1 == standard output stream
+outDebug.exe 2> ErrorLog.txt 1> OutputLog.txt

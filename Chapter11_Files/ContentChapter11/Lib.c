@@ -13,82 +13,122 @@ int getNumberFromUser()
     return number_from_user; // return 12;
 }
 
-float meanVector(Vector *vec)
+
+sVector *freeSVector(sVector *vector)
 {
-    float sum = 0.0f;
+    if (vector == NULL)
+        return NULL;
 
-    for (unsigned int i = 0; i < vec->length; i++)
+    if (vector->data != NULL)
     {
-        sum += vec->data[i];
+        free(vector->data);
     }
+    vector->data = NULL;
 
-    float mean = sum / vec->length;
-    return mean;
+    free(vector);
+    vector = NULL;
+
+    return NULL;
 }
 
-int minVector(Vector *vec)
-{
-    int min;
 
-    for (unsigned int i = 0; i < vec->length; i++)
+sVector *createSVector(unsigned int length, char value)
+{
+    sVector *new_vector = (sVector *)malloc(sizeof(sVector));
+
+    if (new_vector == NULL)
+        return NULL;
+
+    new_vector->length = length;
+    new_vector->data = (char *)malloc(length * sizeof(int));
+
+    if (new_vector->data == NULL)
     {
-        if (i == 0)
-        {
-            min = vec->data[i];
-        }
-
-        if (vec->data[i] < min)
-        {
-            min = vec->data[i];
-        }
+        free(new_vector);
+        new_vector = NULL;
+        return NULL;
     }
-
-    return min;
-}
-
-int maxVector(Vector *vec)
-{
-    int max;
-
-    for (unsigned int i = 0; i < vec->length; i++)
-    {
-        if (i == 0)
-        {
-            max = vec->data[i];
-        }
-
-        if (vec->data[i] > max)
-        {
-            max = vec->data[i];
-        }
-    }
-
-    return max;
-}
-
-int *createArray(unsigned int length, int value)
-{
-    int *p_data;
-    p_data = (int *)malloc(length * sizeof(int));
 
     for (unsigned int i = 0; i < length; i++)
     {
-        p_data[i] = value;
+        new_vector->data[i] = value;
     }
 
-    return p_data;
+    return new_vector;
 }
 
-void printVector(Vector *vec)
+
+void printSVector(sVector *vector)
 {
-    for (unsigned int i = 0; i < vec->length; i++)
+    if (vector == NULL ||
+        vector->data == NULL)
     {
-        printf("%d\n", vec->data[i]);
+        return;
     }
+
+    printf("%s\n", vector->data);
+
 }
 
-int *freeArray(Vector *vec)
+
+sMatrix *freeSMatrix(sMatrix *smatrix)
 {
-    free(vec->data);
-    vec->data = NULL;
+    if (smatrix == NULL)
+        return NULL;
+
+    for (unsigned int i = 0; i < smatrix->size; i++)
+    {
+        if (smatrix->svector[i] != NULL)
+        {
+            freeSVector(smatrix->svector[i]);
+        }
+    }
+
+    free(smatrix);
+    smatrix = NULL;
+
+    return NULL;
+}
+
+
+sMatrix *createSMatrix(unsigned int size, unsigned int length, char value)
+{
+    sMatrix *new_matrix = (sMatrix *)malloc(sizeof(sMatrix));
+
+    if (new_matrix == NULL)
+        return NULL;
+
+    new_matrix->size = size;
+
+    for (unsigned int i = 0; i < size; i++)
+    {
+        new_matrix->svector[i] = createSVector(length, value);
+
+        if (new_matrix->svector[i] == NULL)
+        {
+            for (unsigned int j = 0; j < i; j++)
+            {
+                new_matrix->svector[i] = freeSVector(new_matrix->svector[i]);
+                return NULL;
+            }
+        }
+    }
+
+    return new_matrix;
+}
+
+
+
+void printSMatrix(sMatrix *smatrix)
+{
+    if (smatrix == NULL)
+        return;
+
+    for (unsigned int i = 0; i < smatrix->size; i++)
+    {
+        if (smatrix->svector[i] == NULL)
+            continue;
+
+        printSVector(smatrix->svector[i]);
+    }
 }

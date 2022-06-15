@@ -1,21 +1,39 @@
-struct Vector
-{
-    int *data;
-    unsigned int length;
-};
+#ifndef S_VECTOR_H
+#define S_VECTOR_H
 
-typedef struct Vector Vector;
+
+typedef struct sVector
+{
+    char *data;
+    unsigned int length;
+} sVector;
+
+
+typedef struct sMatrix
+{
+    sVector **svector;
+    unsigned int size;
+} sMatrix;
 
 int getNumberFromUser();
 
-float meanVector(Vector *vec);
 
-int minVector(Vector *vec);
+sVector *freeSVector(sVector *vector);
 
-int maxVector(Vector *vec);
 
-int *createArray(unsigned int length, int value);
+sVector *createSVector(unsigned int length, char value);
 
-void printVector(Vector *vec);
 
-int *freeArray(Vector *vec);
+void printSVector(sVector *vector);
+
+
+sMatrix *freeSMatrix(sMatrix *smatrix);
+
+
+sMatrix *createSMatrix(unsigned int size, unsigned int length, char value);
+
+
+void printSMatrix(sMatrix *smatrix);
+
+
+#endif // S_VECTOR_H
